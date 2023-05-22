@@ -24,33 +24,21 @@ function setCanvasSize() {
 }
 
 // inicializar juego
-function startGame(){
-   
-    game.font = (elementsSize-6) + 'px Verdana';
-    game.textAlign = "end";
+function startGame() {
+  // tamaño elementos
+  game.font = (elementsSize - 6) + 'px Verdana';
+  game.textAlign = "end";
 
-    // Recorrer arreglo
-  const map = maps[2];
+  // mapa del juego
+  const map = maps[1];
 
-  /*
-  Crear un arreglo cada vez que se tenga un salto de linea
-    - .split: genera un arreglo por cada elemento)
-    - .trim (metodo de los strigns): ayuda a limpiar los espacios en blanco */
+// obtener arreglo de caracteres individuales
+  const mapRowCols = map.trim().split('\n').map(row => row.trim().split(''));
 
-    // obtener filas del mapa
-  const mapRows = map.trim().split('\n');
-
-  /*obtener columnas : se obtiene un array de array
-      - row: representa cada elemento de la fila, y a cada string (row)
-      se ejecuta el .trim
-  */
-
-  // crear nuevo arreglo
-  const mapRowCols = mapRows.map(row=>row.trim().split(''));
-    
-    for (let row = 1; row <= 10;row++) {
-        for (let col= 1;col <= 10; col++) {
-          game.fillText(emojis[mapRowCols[row - 1][col - 1]], elementsSize * col, elementsSize * row);
-      }   
-    }
+  // index: obtener posiciones
+  mapRowCols.forEach((row, rowIndex) => {
+    row.forEach((col, colIndex) => {
+      game.fillText(emojis[col], elementsSize * (colIndex + 1), elementsSize * (rowIndex + 1));
+    });
+  });
 }
