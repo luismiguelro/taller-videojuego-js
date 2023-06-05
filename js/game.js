@@ -10,6 +10,11 @@ const leftButton = document.getElementById('left');
 const rightButton = document.getElementById('right');
 const downButton = document.getElementById('down');
 
+//posicion del jugador
+const playerPosition = {
+  x: undefined,
+  y: undefined,
+};
 
 window.addEventListener('load',setCanvasSize);// una vez cargue el HTMl
 
@@ -34,24 +39,16 @@ function startGame() {
   // tamaño elementos
   game.font = (elementsSize - 6) + 'px Verdana';
   game.textAlign = "end";
-
-  // mapa del juego
-  const map = maps[1];
-
-// obtener arreglo de caracteres individuales
-  const mapRowCols = map.trim().split('\n').map(row => row.trim().split(''));
-
-  // index: obtener posiciones
-  mapRowCols.forEach((row, rowIndex) => {
-    row.forEach((col, colIndex) => {
-      game.fillText(emojis[col], elementsSize * (colIndex + 1), elementsSize * (rowIndex + 1));
-    });
-  });
+  renderMap();
 }
 
 // Agregar eventos de clic a los botones
 upButton.addEventListener('click', function() {
   mover('arriba');
+  clearMap();
+  playerPosition.y-=elementsSize;
+
+  movePlayer();
 });
 
 leftButton.addEventListener('click', function() {
@@ -64,6 +61,9 @@ rightButton.addEventListener('click', function() {
 
 downButton.addEventListener('click', function() {
   mover('abajo');
+  clearMap();
+  playerPosition.y+=elementsSize;
+  movePlayer();
 });
 
 // Agregar evento de escucha para las teclas
@@ -84,6 +84,39 @@ window.addEventListener('keydown', function(event) {
           break;
   }
 });
+
+// Funcion movimiento jugador
+function movePlayer(){
+  game.fillText(emojis['PLAYER'],playerPosition.x, playerPosition.y)
+}
+
+// renderizar mapa
+function renderMap(){
+  const map = maps[0];
+
+// obtener arreglo de caracteres individuales
+  const mapRowCols = map.trim().split('\n').map(row => row.trim().split(''));
+
+  // index: obtener posiciones
+  mapRowCols.forEach((row, rowIndex) => {
+    row.forEach((col, colIndex) => {
+     
+      
+      if (col == 'O') {
+       playerPosition.x = elementsSize * (colIndex + 1);
+       playerPosition.y = elementsSize * (rowIndex + 1);
+       console.log(playerPosition);
+      }
+      game.fillText(emojis[col], elementsSize * (colIndex + 1), elementsSize * (rowIndex + 1));
+    });
+  });
+  movePlayer();
+}
+
+// borrar mapa
+function clearMap(){
+  game.clearRect(0,0, canvasSize, canvasSize)
+}
 
 // Función de movimiento
 function mover(direccion) {
