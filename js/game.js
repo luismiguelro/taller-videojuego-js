@@ -36,64 +36,11 @@ function setCanvasSize() {
 
 // inicializar juego
 function startGame() {
+  clearMap();
   // tamaño elementos
   game.font = (elementsSize - 6) + 'px Verdana';
   game.textAlign = "end";
-  renderMap();
-}
-
-// Agregar eventos de clic a los botones
-upButton.addEventListener('click', function() {
-  mover('arriba');
-  clearMap();
-  playerPosition.y-=elementsSize;
-
-  movePlayer();
-});
-
-leftButton.addEventListener('click', function() {
-  mover('izquierda');
-});
-
-rightButton.addEventListener('click', function() {
-  mover('derecha');
-});
-
-downButton.addEventListener('click', function() {
-  mover('abajo');
-  clearMap();
-  playerPosition.y+=elementsSize;
-  movePlayer();
-});
-
-// Agregar evento de escucha para las teclas
-window.addEventListener('keydown', function(event) {
-  console.log(event);
-  switch(event.key) {
-      case 'ArrowUp': // Arriba
-          mover('arriba');
-          break;
-      case 'ArrowLeft': // Izquierda
-          mover('izquierda');
-          break;
-      case 'ArrowRight': // Derecha
-          mover('derecha');
-          break;
-      case 'ArrowDown': // Abajo
-          mover('abajo');
-          break;
-  }
-});
-
-// Funcion movimiento jugador
-function movePlayer(){
-  game.fillText(emojis['PLAYER'],playerPosition.x, playerPosition.y)
-}
-
-// renderizar mapa
-function renderMap(){
-  const map = maps[0];
-
+  const map = maps[2];
 // obtener arreglo de caracteres individuales
   const mapRowCols = map.trim().split('\n').map(row => row.trim().split(''));
 
@@ -101,8 +48,8 @@ function renderMap(){
   mapRowCols.forEach((row, rowIndex) => {
     row.forEach((col, colIndex) => {
      
-      
-      if (col == 'O') {
+      // imprimir punto de partida
+      if (col == 'O' && playerPosition.x == undefined && playerPosition.y == undefined) {
        playerPosition.x = elementsSize * (colIndex + 1);
        playerPosition.y = elementsSize * (rowIndex + 1);
        console.log(playerPosition);
@@ -113,9 +60,71 @@ function renderMap(){
   movePlayer();
 }
 
+// Agregar eventos de clic a los botones
+upButton.addEventListener('click', function() {
+  mover('arriba');
+  playerPosition.y-=elementsSize;
+  startGame()
+});
+
+leftButton.addEventListener('click', function() {
+  mover('izquierda');
+  playerPosition.x-=elementsSize;
+  startGame()
+});
+
+rightButton.addEventListener('click', function() {
+  mover('derecha');
+  playerPosition.x+=elementsSize;
+  startGame()
+});
+
+downButton.addEventListener('click', function() {
+  mover('abajo');
+
+  playerPosition.y+=elementsSize;
+  startGame()
+ 
+});
+
+// Agregar evento de escucha para las teclas
+window.addEventListener('keydown', function(event) {
+  console.log(event);
+  switch(event.key) {
+      case 'ArrowUp': // Arriba
+          mover('arriba');
+          playerPosition.y-=elementsSize;
+          startGame()
+          break;
+      case 'ArrowLeft': // Izquierda
+          mover('izquierda');
+          playerPosition.x-=elementsSize;
+          startGame()
+          break;
+      case 'ArrowRight': // Derecha
+          mover('derecha');
+          playerPosition.x+=elementsSize;
+          startGame()
+          break;
+      case 'ArrowDown': // Abajo
+          mover('abajo');
+          playerPosition.y+=elementsSize;
+          startGame()
+          break;
+  }
+});
+
+
+
+
+// Funcion movimiento jugador
+function movePlayer(){
+  game.fillText(emojis['PLAYER'],playerPosition.x, playerPosition.y)
+}
+
 // borrar mapa
 function clearMap(){
-  game.clearRect(0,0, canvasSize, canvasSize)
+  game.clearRect(0, 0, canvasSize, canvasSize)
 }
 
 // Función de movimiento
@@ -123,3 +132,4 @@ function mover(direccion) {
   // Realizar acción de movimiento en la dirección especificada
   console.log('Movimiento hacia ' + direccion);
 }
+
