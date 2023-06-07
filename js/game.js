@@ -20,6 +20,7 @@ window.addEventListener('load',setCanvasSize);// una vez cargue el HTMl
 
 window.addEventListener('resize',setCanvasSize);// resize del canvas
 
+// Asignar medidas del canvas
 function setCanvasSize() {
   if (window.innerHeight > window.innerWidth) {
     canvasSize = window.innerWidth * 0.8;
@@ -40,7 +41,10 @@ function startGame() {
   // tamaño elementos
   game.font = (elementsSize - 6) + 'px Verdana';
   game.textAlign = "end";
+
+  // mapa
   const map = maps[2];
+
 // obtener arreglo de caracteres individuales
   const mapRowCols = map.trim().split('\n').map(row => row.trim().split(''));
 
@@ -48,43 +52,44 @@ function startGame() {
   mapRowCols.forEach((row, rowIndex) => {
     row.forEach((col, colIndex) => {
      
-      // imprimir punto de partida
+      // renderizar punto de partida: puerta  y validar posiciones (x,y)
       if (col == 'O' && playerPosition.x == undefined && playerPosition.y == undefined) {
        playerPosition.x = elementsSize * (colIndex + 1);
        playerPosition.y = elementsSize * (rowIndex + 1);
        console.log(playerPosition);
       }
+      // renderizar emojis (bombitas y regalo)
       game.fillText(emojis[col], elementsSize * (colIndex + 1), elementsSize * (rowIndex + 1));
     });
   });
+
+  // mover jugador
   movePlayer();
 }
 
-// Agregar eventos de clic a los botones
+// Agregar eventos de click a los botones
 upButton.addEventListener('click', function() {
-  mover('arriba');
-  playerPosition.y-=elementsSize;
-  startGame()
+
+
+  //Evitar que salga del mapa 
+  positionUp();
 });
 
 leftButton.addEventListener('click', function() {
-  mover('izquierda');
-  playerPosition.x-=elementsSize;
-  startGame()
+
+  //Evitar que salga del mapa 
+  positioLeft();
 });
 
 rightButton.addEventListener('click', function() {
-  mover('derecha');
-  playerPosition.x+=elementsSize;
-  startGame()
+
+  //Evitar que salga del mapa 
+  positionRight();
 });
 
 downButton.addEventListener('click', function() {
-  mover('abajo');
-
-  playerPosition.y+=elementsSize;
-  startGame()
- 
+  //Evitar que salga del mapa 
+  positionDown();
 });
 
 // Agregar evento de escucha para las teclas
@@ -92,29 +97,22 @@ window.addEventListener('keydown', function(event) {
   console.log(event);
   switch(event.key) {
       case 'ArrowUp': // Arriba
-          mover('arriba');
-          playerPosition.y-=elementsSize;
-          startGame()
-          break;
+          
+          // Evitar que se salga del mapa
+          positionUp();
+          break;  
       case 'ArrowLeft': // Izquierda
-          mover('izquierda');
-          playerPosition.x-=elementsSize;
-          startGame()
+          positioLeft();
           break;
       case 'ArrowRight': // Derecha
-          mover('derecha');
-          playerPosition.x+=elementsSize;
-          startGame()
+      
+        positionRight();
           break;
       case 'ArrowDown': // Abajo
-          mover('abajo');
-          playerPosition.y+=elementsSize;
-          startGame()
+        positionDown();
           break;
   }
 });
-
-
 
 
 // Funcion movimiento jugador
@@ -127,9 +125,46 @@ function clearMap(){
   game.clearRect(0, 0, canvasSize, canvasSize)
 }
 
-// Función de movimiento
-function mover(direccion) {
-  // Realizar acción de movimiento en la dirección especificada
-  console.log('Movimiento hacia ' + direccion);
+
+/*Posiciones y evitar que salga del mapa*/
+
+function positionUp(){
+  // elementsSize = pto de partida de los elementos
+  if((playerPosition.y - elementsSize)<(elementsSize-2)){
+    console.log('OUT');
+    return; 
+  }
+  playerPosition.y-=elementsSize;
+  startGame()
 }
 
+function positioLeft(){
+  // Evitar que se salga del mapa; elementsSize = pto de partida de los elementos
+  if ((playerPosition.x - elementsSize)<(elementsSize-2)){
+    console.log('OUT');
+    return;
+  }
+  playerPosition.x-=elementsSize;
+  startGame()
+}
+
+function positionRight(){
+
+  // Evitar que se salga del mapa; canvasSize = Limite
+  if ((playerPosition.x + elementsSize)>canvasSize){
+    console.log('OUT');
+    return;
+  }
+  playerPosition.x+=elementsSize;
+  startGame()
+}
+
+function positionDown(){
+  // Evitar que se salga del mapa; canvasSize = Limite
+  if((playerPosition.y+elementsSize)>canvasSize) {
+    console.log('out');
+    return;
+  }
+  playerPosition.y+=elementsSize;
+  startGame()
+}
