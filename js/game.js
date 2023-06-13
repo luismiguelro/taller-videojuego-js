@@ -16,31 +16,50 @@ const playerPosition = {
   y: undefined,
 };
 
+// posicion del regalo
+const giftPosition = {
+  x: undefined,
+  y: undefined,
+}
+
 window.addEventListener('load',setCanvasSize);// una vez cargue el HTMl
 
 window.addEventListener('resize',setCanvasSize);// resize del canvas
 
 // Asignar medidas del canvas
 function setCanvasSize() {
+  windowHeight = window.innerHeight * 0.8
+  windowWidth = window.innerWidth * 0.8
+//Dependiendo del tamaño de la pantalla, va a colocar el tamaño cuadrado del canvas
+//Al dividir entre 10 y luego aproximar el valor a un entero garantiza que el canvas será un entero múltiplo de 10. Finalmente se multiplica la expresión por 10 para obtener el dato real del canvas
+//Con Math.ceil nos ahorramos el problema de los decimales
   if (window.innerHeight > window.innerWidth) {
-    canvasSize = window.innerWidth * 0.8;
-  } else {
-    canvasSize = window.innerHeight * 0.8;
+      if ((windowWidth % 10) !== 0) {
+           canvasSize = Math.ceil(windowWidth / 10) * 10;
+      } else {
+           canvasSize = windowWidth;
+      }} 
+  else {
+      if ((windowHeight % 10) !== 0) {
+           canvasSize = Math.ceil(windowHeight / 10) * 10;
+      } else {
+           canvasSize = windowHeight;
+      }
   }
-  canvas.setAttribute("width", canvasSize);
-  canvas.setAttribute("height", canvasSize);
 
-   elementsSize = canvasSize / 10;
-
-  startGame();
+   canvas.setAttribute('width', canvasSize);
+   canvas.setAttribute('height', canvasSize);
+   elementsSize = (canvasSize / 10);
+   startGame()
 }
 
 // inicializar juego
 function startGame() {
   clearMap();
   // tamaño elementos
-  game.font = (elementsSize - 6) + 'px Verdana';
+  game.font = (elementsSize - 5) + 'px Verdana';
   game.textAlign = "end";
+
 
   // mapa
   const map = maps[2];
@@ -51,15 +70,23 @@ function startGame() {
   // index: obtener posiciones
   mapRowCols.forEach((row, rowIndex) => {
     row.forEach((col, colIndex) => {
-     
+      //Constantes
+      const posX = Math.round(elementsSize * (colIndex + 1));
+      const posY = Math.round(elementsSize * (rowIndex + 1));
+
       // renderizar punto de partida: puerta  y validar posiciones (x,y)
       if (col == 'O' && playerPosition.x == undefined && playerPosition.y == undefined) {
-       playerPosition.x = elementsSize * (colIndex + 1);
-       playerPosition.y = elementsSize * (rowIndex + 1);
+        playerPosition.x = posX;
+        playerPosition.y = posY;
        console.log(playerPosition);
+
+      } else if (col=='I'){
+        //Posicion del regalito
+        giftPosition.x=posX;
+        giftPosition.y=posY;
       }
       // renderizar emojis (bombitas y regalo)
-      game.fillText(emojis[col], elementsSize * (colIndex + 1), elementsSize * (rowIndex + 1));
+      game.fillText(emojis[col], posX, posY);
     });
   });
 
@@ -117,6 +144,15 @@ window.addEventListener('keydown', function(event) {
 
 // Funcion movimiento jugador
 function movePlayer(){
+  // variables con distintas colisiones
+  const giftCollisionX = playerPosition.x === giftPosition.x;
+  const giftCollisionY = playerPosition.y === giftPosition.y;
+  const giftCollision = giftCollisionX && giftCollisionY;
+  
+  //Validar colision con el regalo
+  if(giftCollision){
+    console.log('Subes');
+  }
   game.fillText(emojis['PLAYER'],playerPosition.x, playerPosition.y)
 }
 
@@ -130,7 +166,7 @@ function clearMap(){
 
 function positionUp(){
   // elementsSize = pto de partida de los elementos
-  if((playerPosition.y - elementsSize)<(elementsSize-2)){
+  if((playerPosition.y - elementsSize)<(elementsSize)){
     console.log('OUT');
     return; 
   }
