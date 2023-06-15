@@ -22,6 +22,14 @@ const giftPosition = {
   y: undefined,
 }
 
+//posicion bombas
+const bombPosition = [
+  {
+    x: undefined,
+    y: undefined,
+  }
+];
+
 window.addEventListener('load',setCanvasSize);// una vez cargue el HTMl
 
 window.addEventListener('resize',setCanvasSize);// resize del canvas
@@ -78,12 +86,19 @@ function startGame() {
       if (col == 'O' && playerPosition.x == undefined && playerPosition.y == undefined) {
         playerPosition.x = posX;
         playerPosition.y = posY;
-       console.log(playerPosition);
+    
+      } 
 
-      } else if (col=='I'){
+      //-- Regalito
+      else if (col=='I'){
         //Posicion del regalito
         giftPosition.x=posX;
         giftPosition.y=posY;
+      }
+
+      // Coordenadas de las bombas
+      else if (col=='X'){
+        bombPosition.push(posX,posY);
       }
       // renderizar emojis (bombitas y regalo)
       game.fillText(emojis[col], posX, posY);
@@ -121,7 +136,7 @@ downButton.addEventListener('click', function() {
 
 // Agregar evento de escucha para las teclas
 window.addEventListener('keydown', function(event) {
-  console.log(event);
+
   switch(event.key) {
       case 'ArrowUp': // Arriba
           
@@ -148,11 +163,13 @@ function movePlayer(){
   const giftCollisionX = playerPosition.x === giftPosition.x;
   const giftCollisionY = playerPosition.y === giftPosition.y;
   const giftCollision = giftCollisionX && giftCollisionY;
-  
   //Validar colision con el regalo
   if(giftCollision){
     console.log('Subes');
   }
+  bombColision();
+
+  
   game.fillText(emojis['PLAYER'],playerPosition.x, playerPosition.y)
 }
 
@@ -161,7 +178,18 @@ function clearMap(){
   game.clearRect(0, 0, canvasSize, canvasSize)
 }
 
-
+// Detectar colision con las bombas
+function bombColision(){
+  const obstacleCollision = bombPosition.forEach(bomb=>{
+    let bombPosX = bomb.x === playerPosition.x
+    let bombPosY = bomb.y === playerPosition.y
+    
+    //validar
+    if (bombPosX && bombPosY){
+      console.log("mueress");
+    }
+  })
+}
 /*Posiciones y evitar que salga del mapa*/
 
 function positionUp(){
