@@ -23,12 +23,7 @@ const giftPosition = {
 }
 
 //posicion bombas
-const bombPosition = [
-  {
-    x: undefined,
-    y: undefined,
-  }
-];
+const bombPosition = [];
 
 window.addEventListener('load',setCanvasSize);// una vez cargue el HTMl
 
@@ -90,15 +85,20 @@ function startGame() {
       } 
 
       //-- Regalito
-      else if (col=='I'){
+      else if (col==='I'){
         //Posicion del regalito
         giftPosition.x=posX;
         giftPosition.y=posY;
       }
 
       // Coordenadas de las bombas
-      else if (col=='X'){
-        bombPosition.push(posX,posY);
+      else if (col==='X'){
+        bombPosition.push({
+
+          bombPositionX : posX,
+          bombPositionY : posY
+          
+        })
       }
       // renderizar emojis (bombitas y regalo)
       game.fillText(emojis[col], posX, posY);
@@ -159,18 +159,14 @@ window.addEventListener('keydown', function(event) {
 
 // Funcion movimiento jugador
 function movePlayer(){
-  // variables con distintas colisiones
-  const giftCollisionX = playerPosition.x === giftPosition.x;
-  const giftCollisionY = playerPosition.y === giftPosition.y;
-  const giftCollision = giftCollisionX && giftCollisionY;
-  //Validar colision con el regalo
-  if(giftCollision){
-    console.log('Subes');
-  }
+  // regalo
+  giftDetection();
+
+  // Bombitas
   bombColision();
 
-  
-  game.fillText(emojis['PLAYER'],playerPosition.x, playerPosition.y)
+  // jugador
+  game.fillText(emojis['PLAYER'],playerPosition.x, playerPosition.y);
 }
 
 // borrar mapa
@@ -180,18 +176,31 @@ function clearMap(){
 
 // Detectar colision con las bombas
 function bombColision(){
-  const obstacleCollision = bombPosition.forEach(bomb=>{
-    let bombPosX = bomb.x === playerPosition.x
-    let bombPosY = bomb.y === playerPosition.y
-    
-    //validar
-    if (bombPosX && bombPosY){
-      console.log("mueress");
+  for (const bomb of bombPosition) {
+    if(playerPosition.x === bomb['bombPositionX'] && playerPosition.y === bomb['bombPositionY']){
+      console.log("boom");
     }
-  })
+  }
+  /*for (let i = 0; i < bombPosition.length; i++) { 
+      if(playerPosition.x === bombPosition[i].bombPositionX && playerPosition.y === bombPosition[i].bombPositionY){
+        console.log("boom");
+      }
+  } */
 }
-/*Posiciones y evitar que salga del mapa*/
 
+// Detectar regalo
+function giftDetection(){
+   // variables con distintas colisiones
+   const giftCollisionX = playerPosition.x === giftPosition.x;
+   const giftCollisionY = playerPosition.y === giftPosition.y;
+   const giftCollision = giftCollisionX && giftCollisionY;
+   //Validar colision con el regalo
+   if(giftCollision){
+     console.log('Subes');
+   }
+}
+
+/*Posiciones y evitar que salga del mapa*/
 function positionUp(){
   // elementsSize = pto de partida de los elementos
   if((playerPosition.y - elementsSize)<(elementsSize)){
@@ -232,3 +241,4 @@ function positionDown(){
   playerPosition.y+=elementsSize;
   startGame()
 }
+
