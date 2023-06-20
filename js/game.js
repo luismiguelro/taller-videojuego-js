@@ -3,6 +3,8 @@ const game = canvas.getContext('2d'); // contexto: 2 dimensiones (x,y)
 
 let canvasSize;
 let elementsSize;
+// subir de nivel
+let level = 0;
 
 // Obtener referencia a los botones
 const upButton = document.getElementById('up');
@@ -65,7 +67,12 @@ function startGame() {
 
 
   // mapa
-  const map = maps[2];
+  let map = maps[level];
+  // validar que el numero del nivel
+  if (!map) {
+    gameWin();
+    return;
+  }
 
 // obtener arreglo de caracteres individuales
   const mapRowCols = map.trim().split('\n').map(row => row.trim().split(''));
@@ -197,7 +204,7 @@ function giftDetection(){
    const giftCollision = giftCollisionX && giftCollisionY;
    //Validar colision con el regalo
    if(giftCollision){
-     console.log('Subes');
+     levelWin();
    }
 }
 
@@ -243,3 +250,13 @@ function positionDown(){
   startGame()
 }
 
+//Subir de nivel
+function levelWin(){
+  console.log("subiste de nivel");
+  level++;
+  startGame();
+}
+
+function gameWin (){
+  return alert("Fin...");
+}
