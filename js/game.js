@@ -23,7 +23,7 @@ const giftPosition = {
 }
 
 //posicion bombas
-const bombPosition = [];
+let bombPosition = [];
 
 window.addEventListener('load',setCanvasSize);// una vez cargue el HTMl
 
@@ -91,14 +91,13 @@ function startGame() {
         giftPosition.y=posY;
       }
 
-      // Coordenadas de las bombas
+      //-- Bombas
       else if (col==='X'){
         bombPosition.push({
-
-          bombPositionX : posX,
-          bombPositionY : posY
-          
-        })
+          //posiciones de las bombitas
+          x : posX,
+          y : posY
+        });
       }
       // renderizar emojis (bombitas y regalo)
       game.fillText(emojis[col], posX, posY);
@@ -171,21 +170,23 @@ function movePlayer(){
 
 // borrar mapa
 function clearMap(){
+  //limpiar las posiciones
+  bombPosition = [];
+  
+  //limpiar mapa
   game.clearRect(0, 0, canvasSize, canvasSize)
 }
 
 // Detectar colision con las bombas
 function bombColision(){
-  for (const bomb of bombPosition) {
-    if(playerPosition.x === bomb['bombPositionX'] && playerPosition.y === bomb['bombPositionY']){
-      console.log("boom");
-    }
+  const enemyCollision = bombPosition.find(enemy =>{
+    const enemyCollisionX = enemy.x === playerPosition.x;
+    const enemyCollisionY = enemy.y === playerPosition.y;
+    return enemyCollisionX && enemyCollisionY;
+  })
+  if(enemyCollision){
+    console.log('boom!');
   }
-  /*for (let i = 0; i < bombPosition.length; i++) { 
-      if(playerPosition.x === bombPosition[i].bombPositionX && playerPosition.y === bombPosition[i].bombPositionY){
-        console.log("boom");
-      }
-  } */
 }
 
 // Detectar regalo
