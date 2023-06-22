@@ -3,8 +3,12 @@ const game = canvas.getContext('2d'); // contexto: 2 dimensiones (x,y)
 
 let canvasSize;
 let elementsSize;
+
 // subir de nivel
 let level = 0;
+
+// vidas
+let lives = 3;
 
 // Obtener referencia a los botones
 const upButton = document.getElementById('up');
@@ -193,6 +197,7 @@ function bombColision(){
   })
   if(enemyCollision){
     console.log('boom!');
+    levelLost();
   }
 }
 
@@ -259,4 +264,22 @@ function levelWin(){
 
 function gameWin (){
   return alert("Fin...");
+}
+
+function levelLost(){
+  //perder vidas
+  lives--;
+
+  if(lives<0){
+   // volver a iniciar de nivel
+   level = 0;
+   
+   // resetear las vidas
+   lives=3;
+  }
+   playerPosition.x = undefined;
+   playerPosition.y = undefined;
+   startGame();
+  
+  
 }
