@@ -1,5 +1,6 @@
 const canvas = document.querySelector('#game');
 const game = canvas.getContext('2d'); // contexto: 2 dimensiones (x,y)
+const spanLives = document.querySelector('#lives');
 
 let canvasSize;
 let elementsSize;
@@ -80,6 +81,8 @@ function startGame() {
 
 // obtener arreglo de caracteres individuales
   const mapRowCols = map.trim().split('\n').map(row => row.trim().split(''));
+
+  showLifes();
 
   // index: obtener posiciones
   mapRowCols.forEach((row, rowIndex) => {
@@ -262,10 +265,12 @@ function levelWin(){
   startGame();
 }
 
+// Juego ganado
 function gameWin (){
   return alert("Fin...");
 }
 
+// Nivel perdido y devolver al principio
 function levelLost(){
   //perder vidas
   lives--;
@@ -273,13 +278,24 @@ function levelLost(){
   if(lives<0){
    // volver a iniciar de nivel
    level = 0;
-   
+
    // resetear las vidas
    lives=3;
   }
    playerPosition.x = undefined;
    playerPosition.y = undefined;
    startGame();
-  
+}
+
+// sistema de vidas
+function showLifes(){
+  //crear un array
+  const heartsArray=Array(lives).fill(emojis['HEART']);
+  spanLives.innerHTML = heartsArray.join('');
+  /*limpiar corazones
+  spanLives.innerHTML = "";
+  heartsArray.forEach(heart => {
+    spanLives.append(heart)
+  }*/
   
 }
