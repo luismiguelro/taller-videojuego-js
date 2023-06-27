@@ -1,9 +1,17 @@
 const canvas = document.querySelector('#game');
 const game = canvas.getContext('2d'); // contexto: 2 dimensiones (x,y)
-const spanLives = document.querySelector('#lives');
+const spanLives = document.querySelector('#lives'),
+      spanTime = document.querySelector('#time'),
+      spanRecord = document.querySelector('#record');
+
 
 let canvasSize;
 let elementsSize;
+
+// tiempo inicio
+let timeStart = 0;
+let timePlayer = 0;
+let timeInterval = 0;
 
 // subir de nivel
 let level = 0;
@@ -60,7 +68,7 @@ function setCanvasSize() {
    canvas.setAttribute('width', canvasSize);
    canvas.setAttribute('height', canvasSize);
    elementsSize = (canvasSize / 10);
-   startGame()
+   startGame();
 }
 
 // inicializar juego
@@ -77,6 +85,12 @@ function startGame() {
   if (!map) {
     gameWin();
     return;
+  }
+
+  // tiempo
+  if(!timeStart){
+    timeStart = Date.now();
+    timeInterval = setInterval(showTime,100);
   }
 
 // obtener arreglo de caracteres individuales
@@ -267,7 +281,8 @@ function levelWin(){
 
 // Juego ganado
 function gameWin (){
-  return alert("Fin...");
+  clearInterval(timeInterval);
+  showRecord();
 }
 
 // Nivel perdido y devolver al principio
@@ -281,6 +296,9 @@ function levelLost(){
 
    // resetear las vidas
    lives=3;
+
+   //resetear tiempo inicio
+   timeStart = undefined;
   }
    playerPosition.x = undefined;
    playerPosition.y = undefined;
@@ -298,4 +316,18 @@ function showLifes(){
     spanLives.append(heart)
   }*/
   
+}
+
+// sistema de tiempo
+function showTime(){
+  timePlayer = (Date.now() - timeStart);
+  spanTime.innerHTML = timePlayer;
+}
+
+// Record de tiempo
+function showRecord(){
+  if(timePlayer < localStorage.getItem('record')){
+    localStorage.setItem('record',timePlayer);
+    spanRecord.innerHTML = localStorage.getItem('record')
+  }
 }
