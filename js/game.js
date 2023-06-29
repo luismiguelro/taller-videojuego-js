@@ -2,7 +2,8 @@ const canvas = document.querySelector('#game');
 const game = canvas.getContext('2d'); // contexto: 2 dimensiones (x,y)
 const spanLives = document.querySelector('#lives'),
       spanTime = document.querySelector('#time'),
-      spanRecord = document.querySelector('#record');
+      spanRecord = document.querySelector('#record'),
+      pResult = document.querySelector('#result');
 
 
 let canvasSize;
@@ -91,6 +92,7 @@ function startGame() {
   if(!timeStart){
     timeStart = Date.now();
     timeInterval = setInterval(showTime,100);
+    showRecordP();
   }
 
 // obtener arreglo de caracteres individuales
@@ -186,11 +188,11 @@ window.addEventListener('keydown', function(event) {
 
 // Funcion movimiento jugador
 function movePlayer(){
-  // regalo
-  giftDetection();
-
   // Bombitas
   bombColision();
+
+  // regalo
+  giftDetection();
 
   // jugador
   game.fillText(emojis['PLAYER'],playerPosition.x, playerPosition.y);
@@ -211,7 +213,8 @@ function bombColision(){
     const enemyCollisionX = enemy.x === playerPosition.x;
     const enemyCollisionY = enemy.y === playerPosition.y;
     return enemyCollisionX && enemyCollisionY;
-  })
+  });
+
   if(enemyCollision){
     console.log('boom!');
     levelLost();
@@ -324,10 +327,25 @@ function showTime(){
   spanTime.innerHTML = timePlayer;
 }
 
+// Mostrar record en el HTML
+function showRecordP(){
+  spanRecord.innerHTML = localStorage.getItem('record_time');
+}
+
 // Record de tiempo
 function showRecord(){
-  if(timePlayer < localStorage.getItem('record')){
-    localStorage.setItem('record',timePlayer);
-    spanRecord.innerHTML = localStorage.getItem('record')
+  const recordTime = localStorage.getItem('record_time');
+  const playerTime = Date.now() - timeStart;
+  if (recordTime){
+    if (recordTime >= playerTime){
+      localStorage.setItem('record_time',playerTime);
+      pResult.innerHTML= "superaste el record";
+    } else{
+      pResult.innerHTML= "no superaste el record";
+    }
+  } else{
+    //guardar por primera vez
+    localStorage.setItem('record_time',playerTime );
   }
+  console.log(recordTime,playerTime)
 }
