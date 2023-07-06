@@ -47,8 +47,8 @@ window.addEventListener('resize',setCanvasSize);// resize del canvas
 
 // Asignar medidas del canvas
 function setCanvasSize() {
-  windowHeight = window.innerHeight * 0.8
-  windowWidth = window.innerWidth * 0.8
+  windowHeight = window.innerHeight * 0.6
+  windowWidth = window.innerWidth * 0.6
 //Dependiendo del tamaño de la pantalla, va a colocar el tamaño cuadrado del canvas
 //Al dividir entre 10 y luego aproximar el valor a un entero garantiza que el canvas será un entero múltiplo de 10. Finalmente se multiplica la expresión por 10 para obtener el dato real del canvas
 //Con Math.ceil nos ahorramos el problema de los decimales
@@ -69,6 +69,11 @@ function setCanvasSize() {
    canvas.setAttribute('width', canvasSize);
    canvas.setAttribute('height', canvasSize);
    elementsSize = (canvasSize / 10);
+
+   // resetear player position
+   playerPosition.x = undefined;
+   playerPosition.y = undefined;
+
    startGame();
 }
 
@@ -136,6 +141,7 @@ function startGame() {
 
   // mover jugador
   movePlayer();
+
 }
 
 // Agregar eventos de click a los botones
@@ -188,12 +194,11 @@ window.addEventListener('keydown', function(event) {
 
 // Funcion movimiento jugador
 function movePlayer(){
+   // regalo
+   giftDetection();
+   
   // Bombitas
   bombColision();
-
-  // regalo
-  giftDetection();
-
   // jugador
   game.fillText(emojis['PLAYER'],playerPosition.x, playerPosition.y);
 }
@@ -218,6 +223,7 @@ function bombColision(){
   if(enemyCollision){
     console.log('boom!');
     levelLost();
+    return;
   }
 }
 
@@ -230,6 +236,7 @@ function giftDetection(){
    //Validar colision con el regalo
    if(giftCollision){
      levelWin();
+     return;
    }
 }
 
@@ -278,7 +285,7 @@ function positionDown(){
 //Subir de nivel
 function levelWin(){
   console.log("subiste de nivel");
-  level++;
+  level+=1;
   startGame();
 }
 
@@ -291,9 +298,9 @@ function gameWin (){
 // Nivel perdido y devolver al principio
 function levelLost(){
   //perder vidas
-  lives--;
+  lives-=1;
 
-  if(lives<0){
+  if(lives<=0){
    // volver a iniciar de nivel
    level = 0;
 
@@ -308,16 +315,12 @@ function levelLost(){
    startGame();
 }
 
+
+
 // sistema de vidas
 function showLifes(){
-  //crear un array
-  const heartsArray=Array(lives).fill(emojis['HEART']);
-  spanLives.innerHTML = heartsArray.join('');
-  /*limpiar corazones
-  spanLives.innerHTML = "";
-  heartsArray.forEach(heart => {
-    spanLives.append(heart)
-  }*/
+  const livesSpan = Array(lives).fill(emojis["HEART"]).join("");
+  spanLives.innerText = livesSpan;
   
 }
 
