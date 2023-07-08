@@ -35,7 +35,13 @@ const playerPosition = {
 // posicion del regalo
 const giftPosition = {
   x: undefined,
-  y: undefined,
+  y: undefined
+}
+
+// posicion colisiones
+const collisionPosition ={
+  x: undefined,
+  y: undefined
 }
 
 //posicion bombas
@@ -79,7 +85,7 @@ function setCanvasSize() {
 
 // inicializar juego
 function startGame() {
-  clearMap();
+  
   // tamaño elementos
   game.font = (elementsSize - 5) + 'px Verdana';
   game.textAlign = "end";
@@ -104,6 +110,7 @@ function startGame() {
   const mapRowCols = map.trim().split('\n').map(row => row.trim().split(''));
 
   showLifes();
+  clearMap();
 
   // index: obtener posiciones
   mapRowCols.forEach((row, rowIndex) => {
@@ -132,7 +139,7 @@ function startGame() {
           //posiciones de las bombitas
           x : posX,
           y : posY
-        });
+        })
       }
       // renderizar emojis (bombitas y regalo)
       game.fillText(emojis[col], posX, posY);
@@ -194,11 +201,19 @@ window.addEventListener('keydown', function(event) {
 
 // Funcion movimiento jugador
 function movePlayer(){
-   // regalo
-   giftDetection();
-   
+  // regalo
+  giftDetection();
+
   // Bombitas
   bombColision();
+
+  if(collisionPosition.x){
+    const posXB = Math.round(elementsSize * collisionPosition.x);
+    const posYB = Math.round(elementsSize * collisionPosition.y);
+  // colision
+  game.fillText(emojis['BOMB_COLLISION'],posXB,posYB);
+}
+
   // jugador
   game.fillText(emojis['PLAYER'],playerPosition.x, playerPosition.y);
 }
@@ -219,24 +234,26 @@ function bombColision(){
     const enemyCollisionY = enemy.y === playerPosition.y;
     return enemyCollisionX && enemyCollisionY;
   });
-
+  
   if(enemyCollision){
     console.log('boom!');
-    levelLost();
-    return;
+    // guardar colisiones
+    collisionPosition.x = playerPosition.x;
+    collisionPosition.y = playerPosition.y;
+    levelLost(); 
   }
 }
 
 // Detectar regalo
 function giftDetection(){
    // variables con distintas colisiones
-   const giftCollisionX = playerPosition.x === giftPosition.x;
-   const giftCollisionY = playerPosition.y === giftPosition.y;
+   const giftCollisionX = playerPosition.x == giftPosition.x;
+   const giftCollisionY = playerPosition.y == giftPosition.y;
    const giftCollision = giftCollisionX && giftCollisionY;
+
    //Validar colision con el regalo
    if(giftCollision){
      levelWin();
-     return;
    }
 }
 
@@ -300,6 +317,11 @@ function levelLost(){
   //perder vidas
   lives-=1;
 
+
+  // reiniciar posicion
+  playerPosition.x = undefined;
+  playerPosition.y = undefined;
+  
   if(lives<=0){
    // volver a iniciar de nivel
    level = 0;
@@ -310,8 +332,7 @@ function levelLost(){
    //resetear tiempo inicio
    timeStart = undefined;
   }
-   playerPosition.x = undefined;
-   playerPosition.y = undefined;
+
    startGame();
 }
 
