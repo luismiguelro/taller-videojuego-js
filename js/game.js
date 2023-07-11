@@ -39,7 +39,7 @@ const giftPosition = {
 }
 
 // posicion colisiones
-const collisionPosition ={
+const collisionPosition = {
   x: undefined,
   y: undefined
 }
@@ -208,10 +208,10 @@ function movePlayer(){
   bombColision();
 
   if(collisionPosition.x){
-    const posXB = Math.round(elementsSize * collisionPosition.x);
-    const posYB = Math.round(elementsSize * collisionPosition.y);
+    const posXB = (elementsSize * collisionPosition.x);
+    const posYB = (elementsSize * collisionPosition.y);
   // colision
-  game.fillText(emojis['BOMB_COLLISION'],posXB,posYB);
+  game.fillText(emojis['PLAYER'],posXB,posYB);
 }
 
   // jugador
