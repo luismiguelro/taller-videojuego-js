@@ -115,6 +115,7 @@ function startGame() {
   // index: obtener posiciones
   mapRowCols.forEach((row, rowIndex) => {
     row.forEach((col, colIndex) => {
+
       //Constantes
       const posX = Math.round(elementsSize * (colIndex + 1));
       const posY = Math.round(elementsSize * (rowIndex + 1));
@@ -140,6 +141,10 @@ function startGame() {
           x : posX,
           y : posY
         })
+
+        if(collisionPosition.x){
+          game.fillText(emojis['BOMB_COLLISION'], collisionPosition.x, collisionPosition.y);
+        }
       }
       // renderizar emojis (bombitas y regalo)
       game.fillText(emojis[col], posX, posY);
@@ -206,13 +211,6 @@ function movePlayer(){
 
   // Bombitas
   bombColision();
-
-  if(collisionPosition.x){
-    const posXB = (elementsSize * collisionPosition.x);
-    const posYB = (elementsSize * collisionPosition.y);
-  // colision
-  game.fillText(emojis['PLAYER'],posXB,posYB);
-}
 
   // jugador
   game.fillText(emojis['PLAYER'],playerPosition.x, playerPosition.y);
@@ -303,6 +301,11 @@ function positionDown(){
 function levelWin(){
   console.log("subiste de nivel");
   level+=1;
+
+  // reiniciar colision bomba
+  collisionPosition.x = undefined;
+  collisionPosition.y = undefined;
+
   startGame();
 }
 
@@ -310,6 +313,8 @@ function levelWin(){
 function gameWin (){
   clearInterval(timeInterval);
   showRecord();
+
+  
 }
 
 // Nivel perdido y devolver al principio
@@ -321,6 +326,8 @@ function levelLost(){
   // reiniciar posicion
   playerPosition.x = undefined;
   playerPosition.y = undefined;
+
+
   
   if(lives<=0){
    // volver a iniciar de nivel
@@ -331,12 +338,15 @@ function levelLost(){
 
    //resetear tiempo inicio
    timeStart = undefined;
+
+  
+   // reiniciar colision bomba
+    collisionPosition.x = undefined;
+    collisionPosition.y = undefined;
   }
 
    startGame();
 }
-
-
 
 // sistema de vidas
 function showLifes(){
