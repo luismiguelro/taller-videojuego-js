@@ -1,66 +1,133 @@
-body {
-    background-color: #222;
-    color: #fff;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    margin: 0;
-    padding: 0;
+/*Estilos generales*/
+:root{
+  font-size: 62.5%;
+  --titulo : #6400e4;
+  --azul: #10162f;
+  --blanco: #ffffff;
+  --negro: #10162f;
+}
+
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Silkscreen', cursive;
+}
+main{
+  overflow-x: hidden;
 }
 
 .game-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    height: 100vh;
-    width: 100vw;
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0;
 }
 
-canvas {
-    border: 4px solid #ff6600;
-    border-radius: 8px;
-    background-color: #444;
+.game{
+  box-sizing: initial;
+  border: 2px solid var(--azul);
+  box-shadow: -6px 6px 0 var(--negro);
+  background-color: var(--blanco);
+  margin: 0 auto;
+  margin-top: 10px;
+  padding: 0px 4px 4px 4px;
 }
+
+
+/*Titulo: Skull Game */
+h1{
+  font-size: 3.4rem;
+  font-weight: 900;
+  color: var(--blanco);
+  background-color: var(--titulo);
+  padding: 12px;
+  border-radius: 6px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+h1 span{
+  display: inline-block;
+  padding: 3px;
+  background-color: var(--negro);
+}
+
+/*Botonesqqq*/
 
 .btns {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin: 0 auto;
-    width: 100%;
+  width: 100vw;
+  max-width: 900px;
+  height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 20px;
+  margin-top: 20px;
 }
 
 .btn-game {
-    background-color: #555;
-    border-radius: 8px;
-    border-color: #ff6600;
-    font-family: inherit;
-    margin: 0;
-    padding: 5px 20px;
-    width: 100px;
-    color: #fff;
+  background: none;
+  border: 2px solid;
+  font: inherit;
+  line-height: 1;
+  margin: 0.5em;
+  padding: 1em 2em;
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+  box-shadow: 0.3em 0.3em 0 0 var(--negro), inset 0.3em 0.3em 0 0 var(--negro);
 }
-
-.btn-game:hover {
-    background-color: #ff6600;
-    color: #222;
+.btn-game:hover, .btn-game:focus{
+  box-shadow: 0 0 0 0 var(--titulo), inset 6em 3.5em 0 0 var(--titulo);
 }
 
 .btn-game:not(:last-child) {
     margin-right: 10px;
 }
 
+/*Mensajes*/
+
 .messages {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0 auto;
-    width: 80%;
-    max-width: 460px;
+  width: 700px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px auto 0 auto;
+  gap: 4px;
 }
 
-p {
-    display: block;
-    margin: 0;
-    width: 100%;
+.messages p {
+  padding: 8px;
+  color: var(--blanco);
+  border-radius: 6px;
+  font-size: 1.6rem;
+  min-width: 240px;
+  display: flex;
+  justify-content: center;
+  border: 1px solid  var(--titulo);
+}
+
+.messages p span:nth-child(1){
+  min-width: 86px;
+  text-align: center;
+  margin-right: 6px;
+}
+
+.messages p span:not(#result){
+  display: inline-block;
+  padding: 8px;
+  background-color: var(--negro);
+  border-radius: 4px;
+}
+
+.messages p span.record{
+  display: inline-block;
+  padding: 8px;
+  background-color: var(--negro);
+  border-radius: 4px;
 }
 /*Win Container*/
 .win-container {
