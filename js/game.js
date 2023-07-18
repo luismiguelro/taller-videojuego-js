@@ -313,8 +313,6 @@ function levelWin(){
 function gameWin (){
   clearInterval(timeInterval);
   showRecord();
-
-  
 }
 
 // Nivel perdido y devolver al principio

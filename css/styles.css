@@ -40,11 +40,11 @@ main{
 
 /*Titulo: Skull Game */
 h1{
-  font-size: 3.4rem;
-  font-weight: 900;
+  font-size: 2.4rem;
+  font-weight: 500;
   color: var(--blanco);
   background-color: var(--titulo);
-  padding: 12px;
+  padding: 5px;
   border-radius: 6px;
   margin-top: 10px;
   margin-bottom: 20px;
@@ -101,11 +101,12 @@ h1 span{
 
 .messages p {
   padding: 8px;
-  color: var(--blanco);
+  color: var(--negro);
   border-radius: 6px;
   font-size: 1.6rem;
   min-width: 240px;
   display: flex;
+  align-items: center;
   justify-content: center;
   border: 1px solid  var(--titulo);
 }
@@ -351,14 +352,37 @@ body .btn-bg.Pokemon .btn-group .ball button {
     display: none;
 }
 
-@media (max-width: 440px) {
-    .btn-game{
-        margin-top: 5px;
-    }
 
-    #up,
-    #down {
-        margin-left: 100%;
-        margin-right: 100%;
-    }
+@media (max-width: 760px){
+  .messages{
+      width: 100%;
+      flex-direction: column;
+  }
+}
+@media (max-width: 800px) {
+  .btns{
+      width: 100%;
+      max-width: 350px;
+      height: auto;
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+      grid-template-rows: repeat(3,1fr);
+      padding: 0 6px;
+      gap: 15px;
+  }
+  .btns .btn-game{
+      width: 90%;
+      place-self: center;
+  }
+  .btns .btn-game:nth-child(1),.btns .btn-game:nth-child(4){
+      width: 50%;
+  }
+  .btn-game#up{
+      grid-column-start: 1;
+      grid-column-end: 3;
+  }
+  .btn-game#down{
+      grid-column-start: 1;
+      grid-column-end: 3;
+  }
 }
