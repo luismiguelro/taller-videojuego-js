@@ -1,3 +1,72 @@
+/**
+ * @type {HTMLCanvasElement};
+ */
+document.addEventListener("DOMContentLoaded", () => {
+  initialLayout();
+});
+
+// Layout Inicial (comenzar juego)
+function initialLayout() {
+// Crear los elementos y agregar las clases 
+const sectionElement = document.createElement("section");
+
+
+const divBtnBg = document.createElement("div");
+divBtnBg.classList.add("btn-bg", "Pokemon");
+
+const divBtnInfo = document.createElement("div");
+divBtnInfo.classList.add("btn-info");
+divBtnInfo.textContent = "Pokémon";
+
+const divBtnMention = document.createElement("div");
+divBtnMention.classList.add("btn-mention");
+const spanMention = document.createElement("span");
+spanMention.textContent = "get Up, get Out, and Explore!";
+divBtnMention.appendChild(spanMention);
+
+const divBtnGroup = document.createElement("div");
+divBtnGroup.classList.add("btn-group");
+
+const divBtnBall = document.createElement("div");
+divBtnBall.classList.add("btn", "ball");
+
+const btnGo = document.createElement("button");
+btnGo.classList.add("btn-go");
+
+const divPokemonBall = document.createElement("div");
+divPokemonBall.classList.add("pokemon-ball");
+
+const aElement = document.createElement("a");
+aElement.textContent = "Pokémon";
+
+const spanGo1 = document.createElement("span");
+spanGo1.setAttribute("data-letters", "Go!");
+const spanGo2 = document.createElement("span");
+spanGo2.setAttribute("data-letters", "Go!");
+
+// Construir la jerarquía de elementos
+btnGo.appendChild(divPokemonBall);
+btnGo.appendChild(aElement);
+btnGo.appendChild(spanGo1);
+btnGo.appendChild(spanGo2);
+
+divBtnBall.appendChild(btnGo);
+
+divBtnGroup.appendChild(divBtnBall);
+
+divBtnBg.appendChild(divBtnInfo);
+divBtnBg.appendChild(divBtnMention);
+divBtnBg.appendChild(divBtnGroup);
+
+sectionElement.appendChild(divBtnBg);
+// Agregar el elemento <section class="inactive"> al documento, por ejemplo, al final del <body>
+document.body.appendChild(sectionElement);
+
+}
+
+//  Layout Game
+function interactivityOfTheGame(){
+
 const canvas = document.querySelector('#game');
 const game = canvas.getContext('2d'); // contexto: 2 dimensiones (x,y)
 const spanLives = document.querySelector('#lives'),
@@ -380,4 +449,5 @@ function showRecord(){
     localStorage.setItem('record_time',playerTime );
   }
   console.log(recordTime,playerTime)
+}
 }
