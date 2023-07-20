@@ -72,7 +72,6 @@ h1 span{
 .btn-game {
   background: none;
   border: 2px solid;
-  font: inherit;
   line-height: 1;
   margin: 0.5em;
   padding: 1em 2em;
@@ -115,13 +114,6 @@ h1 span{
   min-width: 86px;
   text-align: center;
   margin-right: 6px;
-}
-
-.messages p span:not(#result){
-  display: inline-block;
-  padding: 8px;
-  background-color: var(--negro);
-  border-radius: 4px;
 }
 
 .messages p span.record{
@@ -352,37 +344,39 @@ body .btn-bg.Pokemon .btn-group .ball button {
     display: none;
 }
 
-
-@media (max-width: 760px){
+@media (max-width: 760px) {
   .messages{
-      width: 100%;
-      flex-direction: column;
+    width: 100%;
+    flex-direction: column;
   }
 }
+
 @media (max-width: 800px) {
   .btns{
-      width: 100%;
-      max-width: 350px;
-      height: auto;
-      display: grid;
-      grid-template-columns: repeat(2,1fr);
-      grid-template-rows: repeat(3,1fr);
-      padding: 0 6px;
-      gap: 15px;
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    grid-template-rows:repeat(3,1fr) ;
+    padding: 0 6px;
+    gap: 15px;
   }
   .btns .btn-game{
-      width: 90%;
-      place-self: center;
+    width: 90%;
+    place-self: center;
   }
-  .btns .btn-game:nth-child(1),.btns .btn-game:nth-child(4){
-      width: 50%;
+  .btns .btn-game:nth-child(1),
+  .btns .btn-game:nth-child(4){
+    width: 50%;
   }
+
   .btn-game#up{
-      grid-column-start: 1;
-      grid-column-end: 3;
+    grid-column-start: 1;
+    grid-column-end: 3;
   }
   .btn-game#down{
-      grid-column-start: 1;
-      grid-column-end: 3;
+    grid-column-start: 1;
+    grid-column-end: 3;
   }
 }
