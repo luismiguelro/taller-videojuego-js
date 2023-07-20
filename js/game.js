@@ -2,7 +2,7 @@
  * @type {HTMLCanvasElement};
  */
 document.addEventListener("DOMContentLoaded", () => {
-  initialLayout();
+  loadGame();
 });
 
 // Layout Inicial (comenzar juego)
@@ -62,6 +62,76 @@ sectionElement.appendChild(divBtnBg);
 // Agregar el elemento <section class="inactive"> al documento, por ejemplo, al final del <body>
 document.body.appendChild(sectionElement);
 
+}
+
+function loadGame(){
+  // Crear los elementos y agregar las clases y contenido adecuado
+const divGameContainer = document.createElement("div");
+divGameContainer.classList.add("game-container");
+
+const h1Element = document.createElement("h1");
+const spanSkull = document.createElement("span");
+spanSkull.textContent = "💀 Skull";
+h1Element.appendChild(spanSkull);
+h1Element.innerHTML += " Game 💀";
+
+const canvasElement = document.createElement("canvas");
+canvasElement.classList.add("game");
+canvasElement.id = "game";
+
+const divBtns = document.createElement("div");
+divBtns.classList.add("btns");
+
+const btnUp = document.createElement("button");
+btnUp.classList.add("btn-game");
+btnUp.id = "up";
+btnUp.textContent = "Arriba";
+
+const btnLeft = document.createElement("button");
+btnLeft.classList.add("btn-game");
+btnLeft.id = "left";
+btnLeft.textContent = "Izquierda";
+
+const btnRight = document.createElement("button");
+btnRight.classList.add("btn-game");
+btnRight.id = "right";
+btnRight.textContent = "Derecha";
+
+const btnDown = document.createElement("button");
+btnDown.classList.add("btn-game");
+btnDown.id = "down";
+btnDown.textContent = "Abajo";
+
+divBtns.appendChild(btnUp);
+divBtns.appendChild(btnLeft);
+divBtns.appendChild(btnRight);
+divBtns.appendChild(btnDown);
+
+const divMessages = document.createElement("div");
+divMessages.classList.add("messages");
+
+const pLives = document.createElement("p");
+pLives.innerHTML = "Vidas: <span id='lives'></span>";
+
+const pTime = document.createElement("p");
+pTime.innerHTML = "Tiempo ⏰: <span id='time'></span>";
+
+const pRecord = document.createElement("p");
+pRecord.innerHTML = "Record 🏁: <span id='record'></span>";
+
+divMessages.appendChild(pLives);
+divMessages.appendChild(pTime);
+divMessages.appendChild(pRecord);
+
+// Construir la jerarquía de elementos
+divGameContainer.appendChild(h1Element);
+divGameContainer.appendChild(canvasElement);
+divGameContainer.appendChild(divBtns);
+divGameContainer.appendChild(divMessages);
+
+document.body.appendChild(divGameContainer);
+
+interactivityOfTheGame()
 }
 
 //  Layout Game
