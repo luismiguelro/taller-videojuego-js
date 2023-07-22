@@ -506,7 +506,7 @@ function showLifes(){
 
 // sistema de tiempo
 function showTime(){
-  timePlayer = (Date.now() - timeStart);
+  timePlayer = formatTime(Date.now() - timeStart);
   spanTime.innerHTML = timePlayer;
 }
 
@@ -518,7 +518,7 @@ function showRecordP(){
 // Record de tiempo
 function showRecord(){
   const recordTime = localStorage.getItem('record_time');
-  const playerTime = Date.now() - timeStart;
+  const playerTime = formatTime(Date.now() - timeStart);
   if (recordTime){
     if (recordTime >= playerTime){
       localStorage.setItem('record_time',playerTime);
@@ -531,5 +531,18 @@ function showRecord(){
     localStorage.setItem('record_time',playerTime );
   }
   console.log(recordTime,playerTime)
+}
+
+// formato del tiempo
+function formatTime(ms) {
+  const cs = parseInt(ms / 10) % 100; // Centisegundos
+  const seg = parseInt(ms / 1000) % 60; // Segundos
+  const min = parseInt(ms / 60000) % 60; // Minutos
+  const hr = parseInt(ms / 3600000) % 24; // Horas
+  const csStr = `0${cs}`.slice(-2);
+  const segStr = `0${seg}`.slice(-2);
+  const minStr = `0${min}`.slice(-2);
+  const hrStr = `0${hr}`.slice(-2);
+  return `${hrStr}:${minStr}:${segStr}:${csStr}`;
 }
 }
