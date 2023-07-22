@@ -2,11 +2,11 @@
  * @type {HTMLCanvasElement};
  */
 document.addEventListener("DOMContentLoaded", () => {
-  loadGame();
+  initialAndEndLayout(initialLayout);
 });
 
 // Layout Inicial (comenzar juego)
-function initialLayout() {
+function initialAndEndLayout(info) {
 // Crear los elementos y agregar las clases 
 const sectionElement = document.createElement("section");
 
@@ -16,12 +16,12 @@ divBtnBg.classList.add("btn-bg", "Pokemon");
 
 const divBtnInfo = document.createElement("div");
 divBtnInfo.classList.add("btn-info");
-divBtnInfo.textContent = "Pokémon";
+divBtnInfo.textContent = info.message;
 
 const divBtnMention = document.createElement("div");
 divBtnMention.classList.add("btn-mention");
 const spanMention = document.createElement("span");
-spanMention.textContent = "get Up, get Out, and Explore!";
+spanMention.textContent = info.description;
 divBtnMention.appendChild(spanMention);
 
 const divBtnGroup = document.createElement("div");
@@ -37,12 +37,12 @@ const divPokemonBall = document.createElement("div");
 divPokemonBall.classList.add("pokemon-ball");
 
 const aElement = document.createElement("a");
-aElement.textContent = "Pokémon";
+aElement.textContent = info.btn;
 
 const spanGo1 = document.createElement("span");
-spanGo1.setAttribute("data-letters", "Go!");
+spanGo1.setAttribute('data-letters', "Go!");
 const spanGo2 = document.createElement("span");
-spanGo2.setAttribute("data-letters", "Go!");
+spanGo2.setAttribute('data-letters', "Go!");
 
 // Construir la jerarquía de elementos
 btnGo.appendChild(divPokemonBall);
@@ -59,8 +59,17 @@ divBtnBg.appendChild(divBtnMention);
 divBtnBg.appendChild(divBtnGroup);
 
 sectionElement.appendChild(divBtnBg);
-// Agregar el elemento <section class="inactive"> al documento, por ejemplo, al final del <body>
+
+// agregar al bidy
 document.body.appendChild(sectionElement);
+
+btnGo.addEventListener('click',()=>{
+  while(divBtnBg.firstChild){
+   divBtnBg.firstChild.remove();
+  }
+  sectionElement.remove();
+  loadGame();
+})
 
 }
 
@@ -129,9 +138,10 @@ divGameContainer.appendChild(canvasElement);
 divGameContainer.appendChild(divBtns);
 divGameContainer.appendChild(divMessages);
 
-document.body.appendChild(divGameContainer);
+let body = document.querySelector("body");
+body.appendChild(divGameContainer);
+interactivityOfTheGame();
 
-interactivityOfTheGame()
 }
 
 //  Layout Game
@@ -185,6 +195,8 @@ const collisionPosition = {
 
 //posicion bombas
 let bombPosition = [];
+
+setCanvasSize();
 
 window.addEventListener('load',setCanvasSize);// una vez cargue el HTMl
 

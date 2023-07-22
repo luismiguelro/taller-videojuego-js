@@ -14,6 +14,19 @@ const emojis = {
     'WIN': '🏆',
     'HEART': '🧡'
   };
+
+  //Info para el layout
+  const initialLayout ={
+    message: "¡BIENVENIDO!",
+    description: "Espero que te diviertas con este juego.",
+    btn: "INICIAAA!"
+}
+
+  const endLayout = {
+    message: "🏆FELICIDADES🏆",
+    description: "Has terminado el juego.",
+    btn: "¿JUGAMOS OTRA VEZ?"
+  };
   
   const maps = [];
   maps.push(`
