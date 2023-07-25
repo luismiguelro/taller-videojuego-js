@@ -27,6 +27,13 @@ const emojis = {
     description: "Has terminado el juego.",
     btn: "¿JUGAMOS OTRA VEZ?"
   };
+
+  const gameOver = {
+    message: "HAS PERDIDO...🥴",
+    description: "Te has quedado sin vidas, el juego termina.",
+    btnYes: "Si",
+    btnNo: "No"
+  }
   
   const maps = [];
   maps.push(`

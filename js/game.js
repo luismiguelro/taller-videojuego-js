@@ -2,8 +2,80 @@
  * @type {HTMLCanvasElement};
  */
 document.addEventListener("DOMContentLoaded", () => {
-  initialAndEndLayout(initialLayout);
+  //initialAndEndLayout(initialLayout);
+  showGameOver(gameOver)
 });
+
+function showGameOver(info){
+  // Crear los elementos y agregar las clases 
+const sectionElement = document.createElement("section");
+
+
+const divBtnBg = document.createElement("div");
+divBtnBg.classList.add("btn-bg", "Pokemon");
+
+const divBtnInfo = document.createElement("div");
+divBtnInfo.classList.add("btn-info");
+divBtnInfo.textContent = info.message;
+
+const divBtnMention = document.createElement("div");
+divBtnMention.classList.add("btn-mention");
+const spanMention = document.createElement("span");
+spanMention.textContent = info.description;
+divBtnMention.appendChild(spanMention);
+
+const divBtnGroup = document.createElement("div");
+divBtnGroup.classList.add("btn-group");
+
+const divBtnBall = document.createElement("div");
+divBtnBall.classList.add("btn", "ball");
+
+const btnGo = document.createElement("button");
+btnGo.classList.add("btn-go");
+
+const divPokemonBall = document.createElement("div");
+divPokemonBall.classList.add("pokemon-ball");
+
+const aElement = document.createElement("a");
+aElement.textContent = info.btnYes;
+
+const spanGo1 = document.createElement("span");
+spanGo1.setAttribute('data-letters', "Go!");
+const spanGo2 = document.createElement("span");
+spanGo2.setAttribute('data-letters', "Go!");
+
+
+
+// Construir la jerarquía de elementos
+btnGo.appendChild(divPokemonBall);
+btnGo.appendChild(aElement);
+btnGo.appendChild(spanGo1);
+btnGo.appendChild(spanGo2);
+
+divBtnBall.appendChild(btnGo);
+
+divBtnGroup.appendChild(divBtnBall);
+
+divBtnBg.appendChild(divBtnInfo);
+divBtnBg.appendChild(divBtnMention);
+divBtnBg.appendChild(divBtnGroup);
+
+sectionElement.appendChild(divBtnBg);
+
+// agregar al bidy
+document.body.appendChild(sectionElement);
+}
+
+function createElementWithClassAndData(tagName, className, dataAttribute, dataValue) {
+  const element = document.createElement(tagName);
+  if (className) {
+    element.classList.add(className);
+  }
+  if (dataAttribute && dataValue) {
+    element.setAttribute(dataAttribute, dataValue);
+  }
+  return element;
+}
 
 // Layout Inicial (comenzar juego)
 function initialAndEndLayout(info) {
@@ -464,6 +536,7 @@ function levelWin(){
 function gameWin (){
   clearInterval(timeInterval);
   showRecord();
+  showRecordP();
 }
 
 // Nivel perdido y devolver al principio
@@ -497,6 +570,70 @@ function levelLost(){
    startGame();
 }
 
+// layout gameOver
+function showGameOver(){
+  // Crear los elementos y agregar las clases 
+const sectionElement = document.createElement("section");
+
+
+const divBtnBg = document.createElement("div");
+divBtnBg.classList.add("btn-bg", "Pokemon");
+
+const divBtnInfo = document.createElement("div");
+divBtnInfo.classList.add("btn-info");
+divBtnInfo.textContent = info.message;
+
+const divBtnMention = document.createElement("div");
+divBtnMention.classList.add("btn-mention");
+const spanMention = document.createElement("span");
+spanMention.textContent = info.description;
+divBtnMention.appendChild(spanMention);
+
+const divBtnGroup = document.createElement("div");
+divBtnGroup.classList.add("btn-group");
+
+const divBtnBall = document.createElement("div");
+divBtnBall.classList.add("btn", "ball");
+
+const btnGo = document.createElement("button");
+btnGo.classList.add("btn-go");
+
+const btnGo2 = document.createElement("button");
+btnGo2.classList.add("btn-go");
+
+const divPokemonBall = document.createElement("div");
+divPokemonBall.classList.add("pokemon-ball");
+
+const aElement = document.createElement("a");
+aElement.textContent = info.btn;
+
+const spanGo1 = document.createElement("span");
+spanGo1.setAttribute('data-letters', "Go!");
+const spanGo2 = document.createElement("span");
+spanGo2.setAttribute('data-letters', "Go!");
+
+// Construir la jerarquía de elementos
+btnGo.appendChild(divPokemonBall);
+btnGo.appendChild(aElement);
+btnGo.appendChild(spanGo1);
+btnGo.appendChild(spanGo2);
+
+divBtnBall.appendChild(btnGo);
+divBtnBall.appendChild(btnGo2);
+
+divBtnGroup.appendChild(divBtnBall);
+
+divBtnBg.appendChild(divBtnInfo);
+divBtnBg.appendChild(divBtnMention);
+divBtnBg.appendChild(divBtnGroup);
+
+sectionElement.appendChild(divBtnBg);
+
+// agregar al bidy
+document.body.appendChild(sectionElement);
+
+}
+
 // sistema de vidas
 function showLifes(){
   const livesSpan = Array(lives).fill(emojis["HEART"]).join("");
@@ -504,7 +641,7 @@ function showLifes(){
   
 }
 
-// sistema de tiempo
+// sistema de tiempoQ
 function showTime(){
   timePlayer = formatTime(Date.now() - timeStart);
   spanTime.innerHTML = timePlayer;
@@ -545,4 +682,6 @@ function formatTime(ms) {
   const hrStr = `0${hr}`.slice(-2);
   return `${hrStr}:${minStr}:${segStr}:${csStr}`;
 }
+
 }
+
