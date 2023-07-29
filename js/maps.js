@@ -16,7 +16,7 @@ const emojis = {
   };
 
   //Info para el layout
-  const initialLayout ={
+  const initialInfo ={
     message: "¡BIENVENIDO!",
     description: "Espero que te diviertas con este juego.",
     btn: "INICIAAA!"

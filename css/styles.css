@@ -352,18 +352,23 @@ body .btn-bg.Pokemon .btn-group .ball button {
 }
 /*Game over*/
 #game-over {
-  gap: 50px;
-  background-color: black;
-  opacity: 0.8;
-  color: white;
-  text-align: center;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
-  min-height: 300px;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  text-align: center;
+  gap: 50px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  
+  opacity: .8;
+  font-family: 'LVDC Game Over 2', sans-serif;
+  color: white; 
+  
+  background-color: black;  
 }
 
 
@@ -429,3 +434,5 @@ body .btn-bg.Pokemon .btn-group .ball button {
     grid-column-end: 3;
   }
 }
+
+
