@@ -24,13 +24,14 @@ const emojis = {
 
   const endLayout = {
     message: "🏆FELICIDADES🏆",
-    description: "Has terminado el juego.",
-    btn: "¿JUGAMOS OTRA VEZ?"
+    description: "",
+    btnYes: "Si",
+    btnNo: "No"
   };
 
   const gameOver = {
     message: "HAS PERDIDO...🥴",
-    description: "Te has quedado sin vidas, el juego termina.",
+    description: "Te has quedado sin vidas, ¿Jugamos otra vez?",
     btnYes: "Si",
     btnNo: "No"
   }

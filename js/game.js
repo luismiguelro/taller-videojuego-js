@@ -151,8 +151,7 @@ function interactivityOfTheGame(){
   const game = canvas.getContext('2d'); // contexto: 2 dimensiones (x,y)
   const spanLives = document.querySelector('#lives'),
         spanTime = document.querySelector('#time'),
-        spanRecord = document.querySelector('#record'),
-        pResult = document.querySelector('#result');
+        spanRecord = document.querySelector('#record');
   
   
   let canvasSize;
@@ -463,8 +462,11 @@ function interactivityOfTheGame(){
   // Juego ganado
   function gameWin (){
     clearInterval(timeInterval);
-    showRecord();
     showRecordP();
+    showRecord();
+    showGameOverAndWin(gameOver)
+   
+  
   }
   
   // Nivel perdido y devolver al principio
@@ -489,7 +491,7 @@ function interactivityOfTheGame(){
      //resetear tiempo inicio
      timeStart = undefined;
 
-     showGameOver();
+     showGameOverAndWin(gameOver);
     
      // reiniciar colision bomba
       collisionPosition.x = undefined;
@@ -527,9 +529,9 @@ function interactivityOfTheGame(){
     if (recordTime){
       if (recordTime >= playerTime){
         localStorage.setItem('record_time',playerTime);
-        pResult.innerHTML= "superaste el record";
+        endLayout.description = "superaste el record";
       } else{
-        pResult.innerHTML= "no superaste el record";
+        gameOver.description = "Aunque no superaste el record ¿Lo intenatamos de nuevo?";
       }
     } else{
       //guardar por primera vez
@@ -551,28 +553,29 @@ function interactivityOfTheGame(){
     return `${hrStr}:${minStr}:${segStr}:${csStr}`;
   }
   
-  function showGameOver(){
+  function showGameOverAndWin(info){
     // Game Over
     let gameOver = document.createElement("div");
     gameOver.id = "game-over";
   
     let gameOverText = document.createElement("p");
-    gameOverText.textContent = "Game over";
+    gameOverText.textContent = info.message;
     gameOver.appendChild(gameOverText);
   
     let playAgainText = document.createElement("p");
-    playAgainText.textContent = "Play Again?";
+    playAgainText.id = "play-again";
+    playAgainText.textContent = info.description;
     gameOver.appendChild(playAgainText);
   
     let buttonContainer = document.createElement("div");
     buttonContainer.id = "button-gameover";
   
     let yesButton = document.createElement("button");
-    yesButton.textContent = "Yes";
+    yesButton.textContent = info.btnYes;
     buttonContainer.appendChild(yesButton);
   
     let noButton = document.createElement("button");
-    noButton.textContent = "No";
+    noButton.textContent = info.btnNo;
     buttonContainer.appendChild(noButton);
   
     gameOver.appendChild(buttonContainer);
@@ -589,7 +592,7 @@ function interactivityOfTheGame(){
     yesButton.addEventListener("click", () => {
       console.log("hola")
       while (gameOver.firstChild) {
-        gameOver.firstChild.remove();
+        gameOver.firstChild.remove()
       }
       gameOver.remove();
       startGame();
