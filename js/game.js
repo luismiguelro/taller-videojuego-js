@@ -81,6 +81,8 @@ divGameContainer.classList.add("game-container");
 const h1Element = document.createElement("h1");
 const spanSkull = document.createElement("span");
 spanSkull.textContent = "💀 Skull";
+spanSkull.id = "skull-span";
+h1Element.id = "game-h1";
 h1Element.appendChild(spanSkull);
 h1Element.innerHTML += " Game 💀";
 
@@ -151,7 +153,9 @@ function interactivityOfTheGame(){
   const game = canvas.getContext('2d'); // contexto: 2 dimensiones (x,y)
   const spanLives = document.querySelector('#lives'),
         spanTime = document.querySelector('#time'),
-        spanRecord = document.querySelector('#record');
+        spanRecord = document.querySelector('#record'),
+        spanSkull = document.querySelector('#skull-span'),
+        gameH1 = document.querySelector('#game-h1');
   
   
   let canvasSize;
@@ -239,13 +243,14 @@ function interactivityOfTheGame(){
     // tamaño elementos
     game.font = (elementsSize - 5) + 'px Verdana';
     game.textAlign = "end";
+
   
   
     // mapa
     let map = maps[level];
     // validar que el numero del nivel
     if (!map) {
-      gameWin();
+     gameWin();
       return;
     }
   
@@ -451,7 +456,9 @@ function interactivityOfTheGame(){
   function levelWin(){
     console.log("subiste de nivel");
     level+=1;
-  
+
+    spanSkull.innerText= "💀 Level " + level;
+    
     // reiniciar colision bomba
     collisionPosition.x = undefined;
     collisionPosition.y = undefined;
@@ -464,11 +471,7 @@ function interactivityOfTheGame(){
     clearInterval(timeInterval);
     showRecordP();
     showRecord();
-    showGameOverAndWin(gameOver)
-   
-  
-  }
-  
+  } 
   // Nivel perdido y devolver al principio
   function levelLost(){
     //perder vidas
@@ -529,9 +532,9 @@ function interactivityOfTheGame(){
     if (recordTime){
       if (recordTime >= playerTime){
         localStorage.setItem('record_time',playerTime);
-        endLayout.description = "superaste el record";
+       // winGame.description = "superaste el record";
       } else{
-        gameOver.description = "Aunque no superaste el record ¿Lo intenatamos de nuevo?";
+        //winGame.description = "Aunque no superaste el record ¿Lo intenatamos de nuevo?";
       }
     } else{
       //guardar por primera vez
