@@ -27,7 +27,7 @@ main{
   align-items: center;
   justify-content: center;
   padding: 10px 0;
-  background-color: #00FF00
+  background-color: #795548
 }
 
 .game{
@@ -183,7 +183,8 @@ body .btn-bg{
     align-items: center;
 }
 
-body .btn-bg.Pokemon {
+body .btn-bg.Pokemon,
+#game-over{
     background: #795548;
     background-image: radial-gradient(white 1px, transparent 1px), radial-gradient(white 1px, transparent 1px);
     background-position: 0 0, 50px 50px;
@@ -356,10 +357,10 @@ body .btn-bg.Pokemon .btn-group .ball button {
 
 
 /*Game over*/
+
 #game-over {
   width: 100vw;
   height: 100vh;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -368,43 +369,47 @@ body .btn-bg.Pokemon .btn-group .ball button {
   position: absolute;
   top: 0;
   left: 0;
-  
-  opacity: .8;
   font-family: 'LVDC Game Over 2', sans-serif;
-  color: white; 
-  
-  background-color: black;  
+  color: white;
+  background-color: #795548;
 }
 
-
 #game-over p:first-child {
-  color: red;
-  font-size: 6.5em;
+  color:var(--principal);
+  font-size: 5.5em;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.1em;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid white
 }
+
+
 #game-over p:nth-child(2) {
   color: white;
   font-size: 2.2em;
   font-weight: 600;
 }
-#button-gameover{
+
+#button-gameover {
   display: flex;
-  align-items: center; /* Centrar verticalmente */
-  justify-content: center; /* Centrar horizontalmente */
+  align-items: center;
+  justify-content: center;
 }
+
 #button-gameover button {
-  margin: 0 30px; /* Centrar horizontalmente */
-  padding: 10px 30px; /* Aumentar el tamaño del botón */
-  width: auto; /* El ancho se ajustará automáticamente al tamaño del contenido */
-  background-color: #fdef05;
+  margin: 0 30px;
+  padding: 10px 30px;
+  width: auto;
+  background-color:#729869;
   border-radius: 8px;
-  border-color: #ff6600;
   font-family: inherit;
   cursor: pointer;
+  color: white;
   transition: transform 0.3s ease-in-out;
 }
+
 #button-gameover button:hover {
   transform: scale(0.95);
 }

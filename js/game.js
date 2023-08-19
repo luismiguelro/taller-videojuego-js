@@ -557,56 +557,55 @@ function interactivityOfTheGame(){
   }
   
   function showGameOverAndWin(info){
-    // Game Over
-    let gameOver = document.createElement("div");
-    gameOver.id = "game-over";
-  
-    let gameOverText = document.createElement("p");
-    gameOverText.textContent = info.message;
-    gameOver.appendChild(gameOverText);
-  
-    let playAgainText = document.createElement("p");
-    playAgainText.id = "play-again";
-    playAgainText.textContent = info.description;
-    gameOver.appendChild(playAgainText);
-  
-    let buttonContainer = document.createElement("div");
-    buttonContainer.id = "button-gameover";
-  
-    let yesButton = document.createElement("button");
-    yesButton.textContent = info.btnYes;
-    buttonContainer.appendChild(yesButton);
-  
-    let noButton = document.createElement("button");
-    noButton.textContent = info.btnNo;
-    buttonContainer.appendChild(noButton);
-  
-    gameOver.appendChild(buttonContainer);
-  
-    document.body.appendChild(gameOver);
-
-    upButton.removeEventListener("click", positionUp)
-    leftButton.removeEventListener("click", positioLeft)     
-    rightButton.removeEventListener("click", positionRight) 
-    downButton.removeEventListener("click",positionDown)     
-
-    window.removeEventListener("keydown", handleKeyDown);
-  
-    yesButton.addEventListener("click", () => {
-      console.log("hola")
-      while (gameOver.firstChild) {
-        gameOver.firstChild.remove()
-      }
-      gameOver.remove();
-      startGame();
-      
-    });
-  
-    noButton.addEventListener("click", () => {
-      removeAllLabelsDOM()
-      initialLayout(initialInfo);
-    });
-  
+     // Game Over
+     let gameOver = document.createElement("div");
+     gameOver.id = "game-over";
+   
+     let gameOverText = document.createElement("p");
+     gameOverText.textContent = "Te haz quedado sin vidas";
+     gameOver.appendChild(gameOverText);
+   
+     let playAgainText = document.createElement("p");
+     playAgainText.textContent = "¿Jugamos de nuevo?";
+     gameOver.appendChild(playAgainText);
+   
+     let buttonContainer = document.createElement("div");
+     buttonContainer.id = "button-gameover";
+   
+     let yesButton = document.createElement("button");
+     yesButton.textContent = "Yes";
+     buttonContainer.appendChild(yesButton);
+   
+     let noButton = document.createElement("button");
+     noButton.textContent = "No";
+     buttonContainer.appendChild(noButton);
+   
+     gameOver.appendChild(buttonContainer);
+   
+     document.body.appendChild(gameOver);
+ 
+     upButton.removeEventListener("click", positionUp)
+     leftButton.removeEventListener("click", positioLeft)     
+     rightButton.removeEventListener("click", positionRight) 
+     downButton.removeEventListener("click",positionDown)     
+ 
+     window.removeEventListener("keydown", handleKeyDown);
+   
+     yesButton.addEventListener("click", () => {
+       console.log("hola")
+       while (gameOver.firstChild) {
+         gameOver.firstChild.remove();
+       }
+       gameOver.remove();
+       startGame();
+       
+     });
+   
+     noButton.addEventListener("click", () => {
+       removeAllLabelsDOM()
+       initialLayout(initialInfo);
+     });
+   
   }
 
   function handleKeyDown(event) {
