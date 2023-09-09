@@ -81,8 +81,6 @@ function loadGame() {
   const h1Element = document.createElement("h1");
   const spanSkull = document.createElement("span");
   spanSkull.textContent = "💀 Skull";
-  spanSkull.id = "skull-span";
-  h1Element.id = "game-h1";
   h1Element.appendChild(spanSkull);
   h1Element.innerHTML += " Game 💀";
 
@@ -458,8 +456,6 @@ function interactivityOfTheGame() {
     console.log("subiste de nivel");
     level += 1;
 
-    spanSkull.innerText = "💀 Level " + level;
-
     // reiniciar colision bomba
     collisionPosition.x = undefined;
     collisionPosition.y = undefined;
@@ -469,9 +465,33 @@ function interactivityOfTheGame() {
 
   // Juego ganado
   function gameWin() {
-    clearInterval(timeInterval);
-    showRecordP();
-    showRecord();
+
+    if (level === maps.length) {
+      clearInterval(timeInterval);
+      showRecord();
+      showRecordP();
+      // reiniciar posicion
+      playerPosition.x = undefined;
+      playerPosition.y = undefined;
+
+      // volver a iniciar de nivel
+      level = 0;
+
+      // resetear las vidas
+      lives = 3;
+
+      //resetear tiempo inicio
+      timeStart = undefined;
+
+      showGameOverAndWin(winGame);
+
+      // reiniciar colision bomba
+      collisionPosition.x = undefined;
+      collisionPosition.y = undefined;
+
+      return;
+    }
+
   }
   // Nivel perdido y devolver al principio
   function levelLost() {
@@ -503,7 +523,6 @@ function interactivityOfTheGame() {
 
       return;
     }
-
     startGame();
   }
 
@@ -533,9 +552,9 @@ function interactivityOfTheGame() {
     if (recordTime) {
       if (recordTime >= playerTime) {
         localStorage.setItem('record_time', playerTime);
-        // winGame.description = "superaste el record";
+        winGame.description = "superaste el record";
       } else {
-        //winGame.description = "Aunque no superaste el record ¿Lo intenatamos de nuevo?";
+        winGame.description = "Aunque no superaste el record ¿Lo intenatamos de nuevo?";
       }
     } else {
       //guardar por primera vez
@@ -563,11 +582,11 @@ function interactivityOfTheGame() {
     gameOver.id = "game-over";
 
     let gameOverText = document.createElement("p");
-    gameOverText.textContent = "Te haz quedado sin vidas";
+    gameOverText.textContent = info.message;
     gameOver.appendChild(gameOverText);
 
     let playAgainText = document.createElement("p");
-    playAgainText.textContent = "¿Jugamos de nuevo?";
+    playAgainText.textContent = info.description;
     gameOver.appendChild(playAgainText);
 
     let buttonContainer = document.createElement("div");
@@ -590,7 +609,7 @@ function interactivityOfTheGame() {
     rightButton.removeEventListener("click", positionRight)
     downButton.removeEventListener("click", positionDown)
 
-    window.removeEventListener("keydown", handleKeyDown);
+
 
     yesButton.addEventListener("click", () => {
       console.log("hola")

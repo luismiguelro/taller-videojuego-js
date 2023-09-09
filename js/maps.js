@@ -30,8 +30,8 @@ const emojis = {
   };
 
   const gameOver = {
-    message: "HAS PERDIDO...🥴",
-    description: "Te has quedado sin vidas, ¿Jugamos otra vez?",
+    message: "TE HAZ QUEDADO SIN VIDAS...🥴",
+    description: "¿Jugamos otra vez?",
     btnYes: "Si",
     btnNo: "No"
   }
@@ -61,7 +61,7 @@ const emojis = {
     XXXX---IXX
     XXXXXXXXXX
     `);
-  maps.push(`
+    maps.push(`
     I-----XXXX
     XXXXX-XXXX
     XX----XXXX
